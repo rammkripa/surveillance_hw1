@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Art</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        #art-description {
+            margin-bottom: 20px;
+        }
+        .button-container {
+            margin: 20px 0;
+        }
+        .company-button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #company-specific {
+            display: none;
+            margin-top: 20px;
+        }
+        #company-specific img {
+            width: 50%;
+            margin-bottom: 10px;
+        }
+        .attributes-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .attributes-list li {
+            margin: 5px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .attributes-list li span {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Choosing Your Digital Persona</h1>
+    <p id="art-description">
+        This artwork represents the confusion and dilemma of choosing between various digital personas created by different companies based on their profiling of you. Each company projects a different identity, making it hard to decide which 'outfit' fits you best.
+    </p>
+
+    <div class="button-container">
+        <button class="company-button" onclick="showCompanyProfile('Google')">Google</button>
+        <button class="company-button" onclick="showCompanyProfile('Fitbit')">Fitbit</button>
+        <button class="company-button" onclick="showCompanyProfile('LinkedIn')">LinkedIn</button>
+    </div>
+
+    <div id="company-specific">
+        <img src="" alt="Company Specific Image" id="company-image">
+        <p id="company-text"></p>
+        <ul class="attributes-list" id="attributes-list">
+            <!-- Attribute list will be populated here -->
+        </ul>
+    </div>
+
+    <img src="initial_confusion.png" alt="Confused Person Image" id="confused-person">
+
+    
+
+    <script>
+        // Object to hold image sources, descriptions, and attributes
+        const companyData = {
+            'Google': {
+                'image': 'google_image.png',
+                'text': "Google: A tech bro outfit with hoodie, jeans, and sneakers, representing a young professional in tech.",
+                'attributes': {
+                    'Age: 18-24': true,
+                    'Relationship: Single': false,
+                    'Income: Moderately High': false,
+                    'Education: Bachelor\'s Degree': false,
+                    'Industry: Technology': true,
+                    'Employer: Large': true
+                }
+            },
+            'LinkedIn': {
+                'image': 'linkedin_image.png',
+                'text': "LinkedIn: A corporate outfit with a business suit and tie, representing an older professional in business development.",
+                'attributes': {
+                    'Age: 35-54': false,
+                    'Education: Master\'s Degree': true,
+                    'Industry: Business Development': false,
+                    'Interests: Data Warehousing': false
+                }
+            },
+            'Fitbit': {
+                'image': 'fitbit_image.png',
+                'text': "Fitbit: A runner's outfit with running shorts, t-shirt, and shoes, representing a fitness enthusiast.",
+                'attributes': {
+                    'Age: 23': true,
+                    'Runs Every Day': true,
+                    'Target Exercise: 6 Days a Week': false,
+                    'Height: 182.8 cm': true,
+                    'Weight: 165 lbs': true
+                }
+            }
+        };
+
+        function showCompanyProfile(company) {
+            const companySpecific = document.getElementById('company-specific');
+            const companyImage = document.getElementById('company-image');
+            const companyText = document.getElementById('company-text');
+            const attributesList = document.getElementById('attributes-list');
+
+            // Set the image source and text content based on the selected company
+            companyImage.src = companyData[company]['image'];
+            companyText.textContent = companyData[company]['text'];
+
+            // Clear previous attribute list
+            attributesList.innerHTML = '';
+
+            // Populate the attributes list
+            const attributes = companyData[company]['attributes'];
+            for (const [attribute, isCorrect] of Object.entries(attributes)) {
+                const listItem = document.createElement('li');
+                listItem.textContent = attribute;
+                
+                // Create tick or cross based on correctness
+                const statusIcon = document.createElement('span');
+                statusIcon.innerHTML = isCorrect ? '✅' : '❌';
+                listItem.appendChild(statusIcon);
+                
+                attributesList.appendChild(listItem);
+            }
+
+            // Show the company-specific section
+            companySpecific.style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
+
