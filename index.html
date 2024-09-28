@@ -70,6 +70,7 @@
         <ul class="attributes-list" id="attributes-list">
             <!-- Attribute list will be populated here -->
         </ul>
+        <img src="" alt="Location Map" id="location-map" style="display: none;">
     </div>
 
     <img src="initial_confusion.png" alt="Confused Person Image" id="confused-person">
@@ -104,21 +105,28 @@
             'Fitbit': {
                 'image': 'fitbit_image.png',
                 'text': "Fitbit: A runner's outfit with running shorts, t-shirt, and shoes, representing a fitness enthusiast.",
+                'map': 'fitbit_map.png', 
                 'attributes': {
                     'Age: 23': true,
                     'Runs Every Day': true,
                     'Target Exercise: 6 Days a Week': false,
                     'Height: 182.8 cm': true,
-                    'Weight: 165 lbs': true
+                    'Weight: 165 lbs': true,
+                    'My Primary Locations (in the US) have been the San Francisco, Chicago, and Washington Areas'  : true
                 }
             }
         };
 
         function showCompanyProfile(company) {
+            const confusedPerson = document.getElementById('confused-person'); // Select the confused person element
+
+            // Hide the confused person image
+            confusedPerson.style.display = 'none';
             const companySpecific = document.getElementById('company-specific');
             const companyImage = document.getElementById('company-image');
             const companyText = document.getElementById('company-text');
             const attributesList = document.getElementById('attributes-list');
+            const locationMap = document.getElementById('location-map'); // Select the map element
 
             // Set the image source and text content based on the selected company
             companyImage.src = companyData[company]['image'];
@@ -139,6 +147,12 @@
                 listItem.appendChild(statusIcon);
                 
                 attributesList.appendChild(listItem);
+            }
+            if (company === 'Fitbit') {
+            locationMap.src = companyData['Fitbit']['map'];
+            locationMap.style.display = 'block';
+            } else {
+            locationMap.style.display = 'none';
             }
 
             // Show the company-specific section
